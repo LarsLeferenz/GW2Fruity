@@ -7,7 +7,7 @@ data = getTPData()
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 
 # add credentials to the account
-creds = ServiceAccountCredentials.from_json_keyfile_name(r'C:\\Users\\Lars\\Documents\\guildwars2-fruity-4eab3be354bc.json', scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name(r'guildwars2-fruity-4eab3be354bc.json', scope)
 
 # authorize the clientsheet 
 client = gspread.authorize(creds)
