@@ -24,13 +24,13 @@ content = sheet_instance.col_values(2)
 for row in content:
     if row in data:
         value = data[row]["buy"]
-        if value > 9999:
-            text = f"{value//10000}G {(value%10000)//100}S {value%100}K"
-        elif value > 99:
-            text = f"{(value%10000)//100}S {value%100}K"
-        else:
-            text = f"{value}K"
-        toInsert.append([text])
+        # if value > 9999:
+        #     text = f"{value//10000}G {(value%10000)//100}S {value%100}K"
+        # elif value > 99:
+        #     text = f"{(value%10000)//100}S {value%100}K"
+        # else:
+        #     text = f"{value}K"
+        toInsert.append([value/10000])
     elif row == "Material" :
         toInsert.append(["Wert"])
     else:
