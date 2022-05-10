@@ -32,7 +32,7 @@ for row in content:
         #     text = f"{value}K"
         toInsert.append([value/10000])
     elif row == "Material" :
-        toInsert.append(["Wert"])
+        toInsert.append(["Wert (einzeln)"])
     else:
         toInsert.append([""])
         
