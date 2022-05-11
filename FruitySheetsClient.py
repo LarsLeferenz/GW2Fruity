@@ -17,9 +17,10 @@ class FruitySheetsClient():
         self._data = getTPData()
 
     def updateSheets(self):
-
+         
         sheet = self._client.open('Guild Wars Gilden Halle Tracking')
-        sheetInstance = sheet.get_worksheet(0)
+        ### Erstes Sheet
+        sheetInstance = sheet.worksheet("Schenke")
         content = sheetInstance.col_values(2)
         toInsert = []
         for row in content:
@@ -33,5 +34,22 @@ class FruitySheetsClient():
                 
         sheetInstance.update(f'E1:E{len(toInsert)}', toInsert)
 
-
+        ### Zweites Sheet
+        sheetInstance = sheet.worksheet("Ausrüstungs Farm")
+        content = sheetInstance.col_values(3)
+        toInsert = []
+        for row in content:
+            if row in self._data:
+                value = self._data[row]["sell"]
+                toInsert.append([value])
+            elif row == "Englisch" :
+                toInsert.append(["Preis (Sell)"])
+            elif row == "Exoctic Weapon" :
+                toInsert.append(["5473"])
+            else:
+                toInsert.append([""])
+                
+        sheetInstance.update(f'F1:F{len(toInsert)}', toInsert)
+        
+        
 
