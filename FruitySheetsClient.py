@@ -1,3 +1,4 @@
+import time
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from TPAPI import getTPData
@@ -48,8 +49,23 @@ class FruitySheetsClient():
                 toInsert.append(["5473"])
             else:
                 toInsert.append([""])
-                
+        
         sheetInstance.update(f'F1:F{len(toInsert)}', toInsert)
+        time.sleep(1)
+        
+        profit = sheetInstance.acell('J22').value
+        
+        history = sheetInstance.col_values(13)
+        dates = sheetInstance.col_values(14)
+        
+        history = [[h] for h in history]
+        dates = [[d] for d in dates]
+        history.append([profit[:-1]])
+        dates.append([time.strftime("%d.%m.%Y %H:%M:%S")])
+        sheetInstance.update(f'M1:M{len(history)}', history, value_input_option='USER_ENTERED')
+        sheetInstance.update(f'N1:N{len(dates)}', dates,value_input_option='USER_ENTERED')
+        
+        
         
         
 
