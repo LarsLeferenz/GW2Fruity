@@ -1,12 +1,18 @@
 import csv
 from urllib.request import Request, urlopen
 
-def validateRow(row: list) -> list:
+def prepareRow(row: list) -> list:
     try:
-        entry : str
-        return [entry if entry.isdigit() else -1 for entry in row ]
+        if len(row) != 6:
+            return [-1] * 6
+        newRow = [-1] * 6
+        newRow[0] = int(row[0])
+        newRow[1] = row[1]
+        entry: str
+        newRow[3:] = [int(entry) if entry.isdigit() else -1 for entry in row[3:]]
+        return newRow
     except:
-        raise ValueError(f"This row is malformed: {str(row)}")
+        raise ValueError(f"This row is malformed: {row}")
 
 def getTPData():
     url = 'http://api.gw2tp.com/1/bulk/items.csv'
@@ -19,11 +25,11 @@ def getTPData():
     data = {}
 
     for row in rawData[1:]:
-        row = validateRow(row)
-        data[str(row[1])] = {"id":int(row[0]),
-                            "buy":int(row[2]),
-                            "sell":int(row[3]),
-                            "supply":int(row[4]),
-                            "demand":int(row[5])}
+        row = prepareRow(row)
+        data[str(row[1])] = {"id":row[0],
+                            "buy":row[2],
+                            "sell":row[3],
+                            "supply":row[4],
+                            "demand":row[5]}
     return data
         
