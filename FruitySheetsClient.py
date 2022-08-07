@@ -46,7 +46,7 @@ class FruitySheetsClient():
         profit = max(profit, lastValue-20)
         profit = min(profit, lastValue+20)
         
-        sheetInstance.update(f'M{len(history)+1}:M{len(history)+1}',[[profit.replace(".",",")]], value_input_option='USER_ENTERED')
+        sheetInstance.update(f'M{len(history)+1}:M{len(history)+1}',[[str(profit).replace(".",",")]], value_input_option='USER_ENTERED')
         sheetInstance.update(f'N{len(dates)+1}:N{len(dates)+1}', [[time.strftime("%d.%m.%Y %H:%M:%S")]] ,value_input_option='USER_ENTERED')
         
 
