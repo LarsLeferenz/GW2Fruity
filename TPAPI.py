@@ -4,7 +4,9 @@ from urllib.request import Request, urlopen
 def prepareRow(row: list) -> list:
     try:
         if len(row) != 6:
-            return [-1] * 6
+            newRow = [-1]*6
+            newRow[1] = "none"
+            return newRow
         newRow = [-1] * 6
         newRow[0] = int(row[0])
         newRow[1] = row[1]
