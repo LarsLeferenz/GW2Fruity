@@ -13,7 +13,7 @@ class FruitySheetsClient():
         self._scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
         self._creds = ServiceAccountCredentials.from_json_keyfile_name(APIKeyPath, self._scope)
         self._client = gspread.authorize(self._creds)
-        self.sheet = self._client.open('Guild Wars Gilden Halle Tracking')
+        self.sheet = self._client.open('Guild Wars Gilden Halle Tracking') #Test
 
     def updateData(self):
         self._data = getTPData()
@@ -22,17 +22,18 @@ class FruitySheetsClient():
         ### Zweites Sheet
         sheetInstance = self.sheet.worksheet("Ausrüstungs Farm")
         content = sheetInstance.col_values(3)
+        oldValues = sheetInstance.col_values(6)
         toInsert = []
-        for row in content:
-            if row in self._data:
-                value = self._data[row]["sell"]
+        for index, cell in enumerate(content):
+            if cell in self._data:
+                value = self._data[cell]["sell"]
                 toInsert.append([value])
-            elif row == "Englisch" :
+            elif cell == "Englisch" :
                 toInsert.append(["Preis (Sell)"])
-            elif row == "Exoctic Weapon" :
+            elif cell == "Exoctic Weapon" :
                 toInsert.append(["5473"])
             else:
-                toInsert.append([""])
+                toInsert.append([oldValues[index]])
         
         sheetInstance.update(f'F1:F{len(toInsert)}', toInsert)
         time.sleep(1)
