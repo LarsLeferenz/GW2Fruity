@@ -1,3 +1,4 @@
+import itertools
 import time
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -54,13 +55,13 @@ class FruitySheetsClient():
     def updateSheets(self):
          
         
-        for tab in ["Schänke", "Mine","Werkstatt","Markt","Lagezentrum","Arena"]:
+        for tab in ["Schänke", "Mine","Werkstatt","Markt","Lagezentrum","Arena","Crafting"]:
             sheetInstance = self.sheet.worksheet(tab)
             content = sheetInstance.col_values(2)
             oldValues = sheetInstance.col_values(5)
             toInsert = []
             material : str; oldValue : str
-            for material, oldValue in zip(content,oldValues):
+            for material, oldValue in itertools.zip_longest(content,oldValues, fillvalue=""):
                 if (not material.startswith("#")) and material in self._data:
                     value = self._data[material]["buy"]
                     toInsert.append([value/10000])
