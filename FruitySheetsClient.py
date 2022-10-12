@@ -54,7 +54,7 @@ class FruitySheetsClient():
 
     def updateSheets(self):
          
-        
+        #test
         for tab in ["Schänke", "Mine","Werkstatt","Markt","Lagezentrum","Arena","Crafting"]:
             sheetInstance = self.sheet.worksheet(tab)
             content = sheetInstance.col_values(2)
