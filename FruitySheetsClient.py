@@ -54,20 +54,22 @@ class FruitySheetsClient():
     def updateSheets(self):
          
         
-        ### Erstes Sheet
-        sheetInstance = self.sheet.worksheet("Schenke")
-        content = sheetInstance.col_values(2)
-        toInsert = []
-        for row in content:
-            if row in self._data:
-                value = self._data[row]["buy"]
-                toInsert.append([value/10000])
-            elif row == "Material" :
-                toInsert.append(["Wert (einzeln)"])
-            else:
-                toInsert.append([""])
-                
-        sheetInstance.update(f'E1:E{len(toInsert)}', toInsert)
+        for tab in ["Schänke", "Mine","Werkstatt","Markt","Lagezentrum","Arena"]:
+            sheetInstance = self.sheet.worksheet(tab)
+            content = sheetInstance.col_values(2)
+            oldValues = sheetInstance.col_values(5)
+            toInsert = []
+            material : str; oldValue : str
+            for material, oldValue in zip(content,oldValues):
+                if (not material.startswith("#")) and material in self._data:
+                    value = self._data[material]["buy"]
+                    toInsert.append([value/10000])
+                elif material == "Material" :
+                    toInsert.append(["Wert (einzeln)"])
+                else:
+                    toInsert.append([oldValue])
+                    
+            sheetInstance.update(f'E1:E{len(toInsert)}', toInsert)
 
         
         

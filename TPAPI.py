@@ -11,7 +11,7 @@ def prepareRow(row: list) -> list:
         newRow[0] = int(row[0])
         newRow[1] = row[1]
         entry: str
-        newRow[3:] = [int(entry) if entry.isdigit() else -1 for entry in row[3:]]
+        newRow[2:] = [int(entry) if entry.isdigit() else -1 for entry in row[2:]]
         return newRow
     except:
         raise ValueError(f"This row is malformed: {row}")
