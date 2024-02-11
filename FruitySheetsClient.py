@@ -69,8 +69,30 @@ class FruitySheetsClient():
                     toInsert.append(["Wert (einzeln)"])
                 else:
                     toInsert.append([oldValue])
-                    
             sheetInstance.update(f'E1:E{len(toInsert)}', toInsert)
+
+        sheetInstance = self.sheet.worksheet("Ben Crafting")
+        content = sheetInstance.col_values(2)
+        oldBuyValues = sheetInstance.col_values(4)
+        oldSellValues = sheetInstance.col_values(5)
+        toInsert = []
+        material : str; oldBuyValue : str; oldSellValue : str
+        for material, oldValue in itertools.zip_longest(content,oldBuyValues, fillvalue=""):
+            if (not material.startswith("#")) and material in self._data:
+                value = self._data[material]["buy"]
+                toInsert.append([value/10000])
+            else:
+                toInsert.append([oldValue])
+        sheetInstance.update(f'E1:E{len(toInsert)}', toInsert)
+        toInsert = []
+        for material, oldValue in itertools.zip_longest(content,oldSellValues, fillvalue=""):
+            if (not material.startswith("#")) and material in self._data:
+                value = self._data[material]["sell"]
+                toInsert.append([value/10000])
+            else:
+                toInsert.append([oldValue])
+        sheetInstance.update(f'D1:D{len(toInsert)}', toInsert)
+
 
         
         
